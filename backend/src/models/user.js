@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
-mongoose.Schema({
+const userSchema = mongoose.Schema({
   name: {
     type: String,
     maxLength: 40,

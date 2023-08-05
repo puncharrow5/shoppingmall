@@ -20,7 +20,7 @@ mongoose
   });
 
 app.get("/", (req, res, next) => {
-  // 비동기 요청에 의한 에러를 처리하기 위해 에러처리기 또한 비동기로 반듬
+  // 비동기 요청에 의한 에러를 처리하기 위해 에러처리기 또한 비동기로 만듬
   setImmediate(() => {
     next(new Error("오류가 발생했습니다."));
   });
@@ -31,12 +31,13 @@ app.post("/", (req, res) => {
   res.json(req.body);
 });
 
-// express를 사용하여 uploads폴더의 정적파일 제공
-app.use(express.static(path.join(__dirname, "../uploads")));
+// /users 경로로 요청이 왔을 때 routes/users 경로로 전달해줌
+app.use("/users", require("./routes/users"));
 
 // 에러발생시 에러처리
 app.use((error, req, res, next) => {
-  res.send(error.message || "서버에서 오류가 발생했습니다.");
+  res.status(err.status || 500);
+  res.send(error.message || "서버에 오류가 발생했습니다.");
 });
 
 app.listen(port, () => {
