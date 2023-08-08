@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "./thunkFunctions";
+import {
+  registerUser,
+  loginUser,
+  authUser,
+  logoutUser,
+} from "./thunkFunctions";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -31,10 +36,61 @@ const userSlice = createSlice({
         toast.info("회원가입이 완료되었습니다.");
       })
       // 가입 실패
-      .addCase(registerUser.rejected, (state) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = "실패";
-        toast.error("회원가입 실패");
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+
+      // 로그인 보류 중
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      // 로그인 성공
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData = action.payload;
+        state.isAuth = true;
+        localStorage.setItem("accessToken", action.payload.accessToken);
+      })
+      // 로그인 실패
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+
+      .addCase(authUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.userData = action.payload;
+        state.isAuth = true;
+      })
+      .addCase(authUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.isAuth = false;
+        localStorage.removeItem("accessToken");
+      })
+
+      .addCase(logoutUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // 로그아웃 시 userSlice의 initialState의 초기 userData로 초기화시켜줌
+        state.userData = initialState.userData;
+        state.isAuth = false;
+        // 토큰 삭제시켜줌
+        localStorage.removeItem("accessToken");
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.isAuth = false;
+        localStorage.removeItem("accessToken");
       });
   },
 });

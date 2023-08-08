@@ -36,7 +36,7 @@ app.use("/users", require("./routes/users"));
 
 // 에러발생시 에러처리
 app.use((error, req, res, next) => {
-  res.status(err.status || 500);
+  res.status(error.status || 500);
   res.send(error.message || "서버에 오류가 발생했습니다.");
 });
 
