@@ -34,6 +34,9 @@ app.post("/", (req, res) => {
 // /users 경로로 요청이 왔을 때 routes/users 경로로 전달해줌
 app.use("/users", require("./routes/users"));
 
+// /products 경로로 요청이 왔을 때 routes/products 경로로 전달해줌
+app.use("/products", require("./routes/products"));
+
 // 에러발생시 에러처리
 app.use((error, req, res, next) => {
   res.status(error.status || 500);

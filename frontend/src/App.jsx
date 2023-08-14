@@ -8,9 +8,14 @@ import Footer from "./layout/Footer";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ProtectedPage from "./pages/ProtectedPage";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import ProtectedPage from "./pages/ProtectedPage";
+import UploadProductPage from "./pages/UploadProductPage";
+import DetailProductPage from "./pages/DetailProductPage";
+import CartPage from "./pages/CartPage";
+import HistoryPage from "./pages/HistoryPage";
 import NotAuthRoutes from "./components/NotAuthRoutes";
+
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -40,6 +45,7 @@ function App() {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
 
+  // 페이지 이동할 때마다 데이터베이스에 있는 user의 데이터를 클라이언트로 호출함
   useEffect(() => {
     if (isAuth) {
       dispatch(authUser());
@@ -54,6 +60,10 @@ function App() {
         {/* 로그인하지 않았을 경우 접근 불가*/}
         <Route element={<ProtectedRoutes isAuth={isAuth} />}>
           <Route path="/protected" element={<ProtectedPage />} />
+          <Route path="/product/upload" element={<UploadProductPage />} />
+          <Route path="/product/:productId" element={<DetailProductPage />} />
+          <Route path="/user/cart" element={<CartPage />} />
+          <Route path="/history" element={<HistoryPage />} />
         </Route>
 
         {/* 로그인했을 경우 접근 불가 */}

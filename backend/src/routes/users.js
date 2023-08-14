@@ -55,14 +55,16 @@ router.post("/logout", auth, async (req, res, next) => {
   }
 });
 
+// 토큰 유효성 검사 후 middleware에서 user의 데이터를 클라이언트로 보내줌
 router.get("/auth", auth, async (req, res) => {
-  // 토큰 유효성 검사 후 middleware에서 user의 데이터를 가져옴
   return res.json({
     id: req.user._id,
     email: req.user.email,
     name: req.user.name,
     role: req.user.role,
     image: req.user.image,
+    cart: req.user.cart,
+    history: req.user.history,
   });
 });
 

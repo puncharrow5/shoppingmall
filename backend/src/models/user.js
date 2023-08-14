@@ -22,6 +22,14 @@ const userSchema = mongoose.Schema({
   image: {
     type: String,
   },
+  cart: {
+    type: Array,
+    default: [],
+  },
+  history: {
+    type: Array,
+    default: [],
+  },
 });
 
 // save하기 전 함수 호출
