@@ -10,13 +10,12 @@ const productSchema = mongoose.Schema({
     type: String,
     maxLength: 30,
   },
-  description: {
-    String,
-  },
+  description: String,
   price: {
     type: Number,
+    default: 10000,
   },
-  image: {
+  images: {
     type: Array,
     default: [],
   },
@@ -24,7 +23,7 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  producttypes: {
+  producttype: {
     type: Number,
     default: 1,
   },

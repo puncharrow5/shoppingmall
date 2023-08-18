@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios";
 import UploadFile from "../../components/UploadFile";
 
-const producttypes = [
-  { key: 1, value: "Guitar" },
-  { key: 2, value: "Bass" },
-  { key: 3, value: "Acoustic" },
-  { key: 4, value: "KeyboardInstrumnet" },
-  { key: 5, value: "Amp" },
-  { key: 6, value: "Recording" },
+const producttype = [
+  { key: 1, value: "Effect Pedals" },
+  { key: 2, value: "Plugins" },
+  { key: 3, value: "Eurorack Modules" },
+  { key: 4, value: "Cables" },
+  { key: 5, value: "Power Supplies" },
+  { key: 6, value: "Apparel & Merch" },
 ];
 
 const UploadProductPage = () => {
@@ -22,7 +22,7 @@ const UploadProductPage = () => {
     title: "",
     description: "",
     price: 0,
-    producttypes: 1,
+    producttype: 1,
     images: [],
   });
 
@@ -107,17 +107,17 @@ const UploadProductPage = () => {
             name="producttype"
             id="producttype"
             onChange={handleChange}
-            value={product.producttypes}
+            value={product.producttype}
           >
-            {producttypes.map((item) => (
-              <option key={item.key} value={item.value}>
+            {producttype.map((item) => (
+              <option key={item.key} value={item.key}>
                 {item.value}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 mb-5">
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-black rounded-md hover:bg-gray-700"

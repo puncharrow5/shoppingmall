@@ -16,7 +16,51 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("file");
 
-// 상품 이미지 업로드
+router.get("/", async (req, res, next) => {
+  // desc(descending) = 내림차순
+  const order = req.query.order ? req.query.order : "desc";
+
+  // id로 정렬
+  const sortBy = req.query.sortBy ? req.query.sortBy : "_id";
+
+  const limit = req.query.limit ? Number(req.query.limit) : 20;
+
+  const skip = req.query.skip ? Number(req.query.skip) : 0;
+
+  let findArgs = {};
+  for (let key in req.query.filters) {
+    if (req.query.filters[key].length > 0) {
+      findArgs[key] = req.query.filters[key];
+    }
+  }
+
+  try {
+    // find(findArgs) 메소드를 통해 findArgs의 데이터에 해당하는 상품들만 데이터베이스에서 products 컬렉션에서 검색함
+    const products = await Product.find(findArgs)
+      // populate 메소드(몽고DB 메소드)를 통해 데이터베이스에 저장된 writer의 id 뿐만 아니라 writer의 모든 유저데이터들을 갖고옴
+      .populate("writer")
+      // 내림차순으로 정렬
+      .sort([[order]])
+      // 어디서부터 데이터를 가져오는지에 대한 위치(몽고DB 메소드)
+      .skip(skip)
+      // 한번에 얼마나 많은 데이터를 가져오는지(몽고DB 메소드)
+      .limit(limit);
+
+    // 전체 document의 숫자
+    const productsTotal = await Product.countDocuments(findArgs);
+    // skip + limit이 전체 document보다 적으면 hasMore이 true가 되면서 더보기 생성
+    const hasMore = skip + limit < productsTotal ? true : false;
+
+    return res.status(200).json({
+      products,
+      hasMore,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 상품 이미지 업로드(auth 미들웨어 거쳐감)
 router.post("/image", auth, async (req, res, next) => {
   upload(req, res, (err) => {
     // 파일 업로드 도중 에러 발생시
@@ -28,6 +72,7 @@ router.post("/image", auth, async (req, res, next) => {
   });
 });
 
+// 상품의 데이터를 데이터베이스에 저장(auth 미들웨어 거쳐감)
 router.post("/", auth, async (req, res, next) => {
   try {
     const product = new Product(req.body);

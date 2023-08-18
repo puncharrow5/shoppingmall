@@ -42,11 +42,17 @@ const UploadFile = ({ onImageChange, images }) => {
     <div className="flex gap-4">
       <Dropzone onDrop={handleDrop}>
         {({ getRootProps, getInputProps }) => (
-          <section className="min-w-[300px] h-[300px] border items-center justify-center">
+          <section className="flex min-w-[300px] h-[300px] border items-center justify-center">
             <div {...getRootProps()}>
               <input {...getInputProps()} />
-              <p className="text-2xl">
-                업로드하려고 하는 상품의 이미지를 첨부해주세요.
+              <p className="align-middle text-2xl text-center whitespace-pre-line">
+                Choose a File
+              </p>
+              <p className="align-middle my-1 text-xl text-center text-slate-400  whitespace-pre-line">
+                or
+              </p>
+              <p className="align-middle text-2xl text-center whitespace-pre-line">
+                Drag & Drop
               </p>
             </div>
           </section>
@@ -58,7 +64,7 @@ const UploadFile = ({ onImageChange, images }) => {
           <div key={image} onClick={handleDelete}>
             <img
               className="min-w-[300px] h-[300px]"
-              src={`${import.meta.env.SERVER_URL}/${image}`}
+              src={`${import.meta.env.VITE_SERVER_URL}/uploads/${image}`}
               alt="imagefile"
             />
           </div>

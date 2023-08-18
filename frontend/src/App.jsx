@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Layout() {
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="flex flex-col h-full min-h-screen justify-between bg-[#646464]">
       <ToastContainer
         position="bottom-right"
         theme="light"
@@ -31,7 +31,7 @@ function Layout() {
 
       <Navbar />
 
-      <main className="mb-auto w-10/12 max-w-4xl mx-auto">
+      <main className="mb-auto mt-10 w-10/12 max-w-4xl mx-auto px-10 bg-white">
         <Outlet />
       </main>
 

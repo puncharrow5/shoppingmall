@@ -12,12 +12,14 @@ const Navbar = () => {
   };
 
   return (
-    <section className="relative z-10 text-white bg-gray-900 py-1">
+    <section className="relative z-10 text-white bg-[#4f4c47] py-2">
       <div className="w-full">
         <div className="flex items-center justify-between mx-5 sm:mx-10 lg:mx-20">
           {/* Logo */}
           <div className="flex items-center text-2xl h-14">
-            <Link to="/">Logo</Link>
+            <Link to="/">
+              <img className="w-40" src="./images/strymonLogo.png" alt="Logo" />
+            </Link>
           </div>
 
           {/* Menu Buttons */}
