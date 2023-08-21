@@ -25,10 +25,10 @@ const producttypes = [
   },
 ];
 
-const price = [
+const prices = [
   {
     _id: 0,
-    name: "",
+    name: "전체보기",
     array: [],
   },
   {
@@ -48,14 +48,19 @@ const price = [
   },
   {
     _id: 4,
-    name: "60 ~ 80만원",
+    name: "60만원 ~ 80만원",
     array: [600000, 800000],
   },
   {
     _id: 5,
-    name: "80 ~ 100만원",
+    name: "80만원 ~ 100만원",
     array: [800000, 1000000],
   },
 ];
 
-export { producttypes, price };
+const productTypesMap = {};
+producttypes.forEach((type) => {
+  productTypesMap[type._id] = type.name;
+});
+
+export { producttypes, productTypesMap, prices };

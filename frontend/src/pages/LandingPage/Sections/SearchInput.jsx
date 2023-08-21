@@ -1,7 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const SearchInput = () => {
-  return <div>SearchInput</div>;
+const SearchInput = ({ onSearch, searchTerm }) => {
+  return (
+    <input
+      className="h-8 w-1/3 mb-6 px-3 border text-sm border-gray-300 rounded-md"
+      type="text"
+      placeholder="찾는 상품이 있나요?"
+      onChange={onSearch}
+      value={searchTerm}
+    />
+  );
+};
+
+SearchInput.propTypes = {
+  onSearch: PropTypes.func.isRequired, // Validate onSearch as a function
+  searchTerm: PropTypes.string.isRequired, // Validate searchTerm as a string
 };
 
 export default SearchInput;

@@ -4,13 +4,14 @@ import TypeSelect from "./Sections/TypeSelect";
 import PriceSelect from "./Sections/PriceSelect";
 import SearchInput from "./Sections/SearchInput";
 import CardItem from "./Sections/CardItem";
-import { producttypes } from "../../utils/filterData";
+import { producttypes, prices } from "../../utils/filterData";
 
 const LandingPage = () => {
-  const limit = 4;
+  const limit = 8;
   const [products, setProducts] = useState([]);
   const [skip, setSkip] = useState(0);
   const [hasMore, setHasMore] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     producttypes: [],
     price: [],
@@ -37,7 +38,6 @@ const LandingPage = () => {
 
     try {
       const response = await axiosInstance.get("/products", { params });
-
       if (loadMore) {
         // 원래 있던 products들을 나열한 후 새로 받은 products들을 나열
         setProducts([...products, ...response.data.products]);
@@ -57,19 +57,36 @@ const LandingPage = () => {
       skip: skip + limit,
       limit,
       loadMore: true,
+      searchTerm: searchTerm,
     };
     // 데이터베이스에서 product의 데이터 호출
     fetchProducts(body);
     setSkip(skip + limit);
   };
 
+  // 이부분 다시 공부하기!!!
   const handleFilters = (newFilteredData, category) => {
     const newFilters = { ...filters };
     newFilters[category] = newFilteredData;
-
+    if (category === "price") {
+      const priceValue = handlePrice(newFilteredData);
+      newFilters[category] = priceValue;
+    }
     showFilteredResults(newFilters);
     // filters의 state를 newFilters로 업데이트
     setFilters(newFilters);
+  };
+
+  const handlePrice = (value) => {
+    let array = [];
+    // filterData의 prices의 key
+    for (let key in prices) {
+      // parseInt 메소드를 이용해 10진법의 수로 바꿔줌
+      if (prices[key]._id === parseInt(value, 10)) {
+        array = prices[key].array;
+      }
+    }
+    return array;
   };
 
   const showFilteredResults = (filters) => {
@@ -77,20 +94,29 @@ const LandingPage = () => {
       skip: 0,
       limit,
       filters,
+      searchTerm,
     };
     // 데이터베이스에서 product의 데이터 호출
     fetchProducts(body);
     setSkip(0);
   };
 
+  const handleSearchTerm = (event) => {
+    const body = {
+      skip: 0,
+      limit,
+      filters,
+      searchTerm: event.target.value,
+    };
+    setSkip(0);
+    setSearchTerm(event.target.value);
+    fetchProducts(body);
+  };
+
   return (
     <section>
-      <div className="py-10">
-        <h2 className="text-4xl">Strymon Products</h2>
-      </div>
-
       {/* Filter */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 pt-6">
         <div className="w-full">
           <TypeSelect
             producttypes={producttypes}
@@ -99,13 +125,17 @@ const LandingPage = () => {
           />
         </div>
         <div className="w-full">
-          <PriceSelect />
+          <PriceSelect
+            prices={prices}
+            checkedPrice={filters.price}
+            onFilters={(filters) => handleFilters(filters, "price")}
+          />
         </div>
       </div>
 
       {/* Search */}
       <div className="flex justify-end">
-        <SearchInput />
+        <SearchInput searchTerm={searchTerm} onSearch={handleSearchTerm} />
       </div>
 
       {/* Card */}

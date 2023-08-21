@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axios";
 import UploadFile from "../../components/UploadFile";
 
-const producttype = [
+const producttypes = [
   { key: 1, value: "Effect Pedals" },
   { key: 2, value: "Plugins" },
   { key: 3, value: "Eurorack Modules" },
@@ -22,7 +22,7 @@ const UploadProductPage = () => {
     title: "",
     description: "",
     price: 0,
-    producttype: 1,
+    producttypes: 1,
     images: [],
   });
 
@@ -61,14 +61,16 @@ const UploadProductPage = () => {
   return (
     <section>
       <div className="text-center m-12">
-        <h1 className="text-2xl">예상 상품 업로드</h1>
+        <h1 className="text-2xl font-bold">예상 상품 업로드</h1>
       </div>
 
       <form className="mt-6" onSubmit={handleSubmit}>
         <UploadFile images={product.images} onImageChange={handleImages} />
 
         <div className="mt-4">
-          <label htmlFor="title">이름</label>
+          <label className="font-bold" htmlFor="title">
+            이름
+          </label>
           <input
             className="w-full px-4 py-2 mt-1 mb-3 bg-white border-2 border-slate-300 rounded-md"
             name="title"
@@ -79,7 +81,9 @@ const UploadProductPage = () => {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="description">설명</label>
+          <label className="font-bold" htmlFor="description">
+            설명
+          </label>
           <input
             className="w-full px-4 py-2 mt-1 mb-3 bg-white border-2 border-slate-300 rounded-md"
             name="description"
@@ -90,7 +94,9 @@ const UploadProductPage = () => {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="price">가격</label>
+          <label className="font-bold" htmlFor="price">
+            가격
+          </label>
           <input
             className="w-full px-4 py-2 mt-1 mb-3 bg-white border-2 border-slate-300 rounded-md"
             name="price"
@@ -101,15 +107,17 @@ const UploadProductPage = () => {
         </div>
 
         <div className="mt-4">
-          <label htmlFor="producttype">품목</label>
+          <label className="font-bold" htmlFor="producttypes">
+            품목
+          </label>
           <select
             className="w-full px-4 py-2 mt-1 mb-3 bg-white border-2 border-slate-300 rounded-md"
-            name="producttype"
-            id="producttype"
+            name="producttypes"
+            id="producttypes"
             onChange={handleChange}
-            value={product.producttype}
+            value={product.producttypes}
           >
-            {producttype.map((item) => (
+            {producttypes.map((item) => (
               <option key={item.key} value={item.key}>
                 {item.value}
               </option>
@@ -117,7 +125,7 @@ const UploadProductPage = () => {
           </select>
         </div>
 
-        <div className="mt-12 mb-5">
+        <div className="mt-12 mb-5 ">
           <button
             type="submit"
             className="w-full px-4 py-2 text-white bg-black rounded-md hover:bg-gray-700"

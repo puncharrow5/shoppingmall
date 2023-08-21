@@ -10,13 +10,13 @@ const routes = [
   { to: "/register", name: "회원가입", auth: false },
   { to: "/product/upload", name: "업로드", auth: true },
   { to: "/history", name: "주문목록", auth: true },
+  { to: "", name: "로그아웃", auth: true },
   {
     to: "/user/cart",
     name: "장바구니",
     auth: true,
     icon: <AiOutlineShoppingCart style={{ fontSize: "2rem" }} />,
   },
-  { to: "", name: "로그아웃", auth: true },
 ];
 
 const NavItem = ({ mobile }) => {

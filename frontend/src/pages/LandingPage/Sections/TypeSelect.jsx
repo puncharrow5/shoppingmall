@@ -21,9 +21,9 @@ const TypeSelect = ({ producttypes, checkedTypes, onFilters }) => {
   };
 
   return (
-    <div className="p-2 mb-3 bg-gray-100 rounded-md">
+    <div className="flex flex-wrap p-2 bg-gray-200 rounded-md">
       {producttypes?.map((producttype) => (
-        <div key={producttype._id}>
+        <div className="w-1/3" key={producttype._id}>
           <input
             type="checkbox"
             onChange={() => handleToggle(producttype._id)}
@@ -31,6 +31,7 @@ const TypeSelect = ({ producttypes, checkedTypes, onFilters }) => {
               checkedTypes.indexOf(producttype._id) === -1 ? false : true
             }
           />{" "}
+          <label className="font-bold">{producttype.name}</label>
         </div>
       ))}
     </div>
@@ -41,7 +42,6 @@ TypeSelect.propTypes = {
   producttypes: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      // Add other prop types for producttype here if needed
     })
   ).isRequired,
   checkedTypes: PropTypes.arrayOf(PropTypes.string).isRequired,

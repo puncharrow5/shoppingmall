@@ -27,11 +27,27 @@ router.get("/", async (req, res, next) => {
 
   const skip = req.query.skip ? Number(req.query.skip) : 0;
 
+  const searchTerm = req.query.searchTerm;
+
   let findArgs = {};
   for (let key in req.query.filters) {
     if (req.query.filters[key].length > 0) {
-      findArgs[key] = req.query.filters[key];
+      if (key === "price") {
+        findArgs[key] = {
+          // 몽고DB에서 사용 할 수 있는 쿼리 옵션($gte = 이상)
+          $gte: req.query.filters[key][0],
+          // 몽고DB에서 사용 할 수 있는 쿼리 옵션($lte = 이하)
+          $lte: req.query.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.query.filters[key];
+      }
     }
+  }
+
+  if (searchTerm) {
+    // 몽고DB의 $search 기능으로 searchTerm을 키워드로 검색
+    findArgs["$text"] = { $search: searchTerm };
   }
 
   try {

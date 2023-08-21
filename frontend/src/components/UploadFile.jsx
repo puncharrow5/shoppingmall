@@ -45,13 +45,13 @@ const UploadFile = ({ onImageChange, images }) => {
           <section className="flex min-w-[300px] h-[300px] border items-center justify-center">
             <div {...getRootProps()}>
               <input {...getInputProps()} />
-              <p className="align-middle text-2xl text-center whitespace-pre-line">
+              <p className="align-middle text-2xl font-bold text-center whitespace-pre-line">
                 Choose a File
               </p>
               <p className="align-middle my-1 text-xl text-center text-slate-400  whitespace-pre-line">
                 or
               </p>
-              <p className="align-middle text-2xl text-center whitespace-pre-line">
+              <p className="align-middle text-2xl font-bold text-center whitespace-pre-line">
                 Drag & Drop
               </p>
             </div>

@@ -23,7 +23,7 @@ const productSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  producttype: {
+  producttypes: {
     type: Number,
     default: 1,
   },
@@ -32,6 +32,19 @@ const productSchema = mongoose.Schema({
     default: 0,
   },
 });
+
+productSchema.index(
+  {
+    title: "text",
+    description: "text",
+  },
+  {
+    weights: {
+      title: 2,
+      description: 1,
+    },
+  }
+);
 
 const Product = mongoose.model("Product", productSchema);
 
