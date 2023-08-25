@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <section className="relative z-10 text-white font-bold bg-[#4f4c47] py-2">
+    <section className="relative z-10 text-white font-bold bg-[#111111] py-2">
       <div className="w-full">
         <div className="flex items-center justify-between mx-5 sm:mx-10 lg:mx-20">
           {/* Logo */}

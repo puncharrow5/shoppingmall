@@ -15,7 +15,9 @@ const CardItem = ({ product }) => {
           {product.title}
         </p>
         <p className="px-1 mb-3 text-xs text-[#caa171]">{productTypeName}</p>
-        <p className="px-1 text-[#6088b0] font-bold">{product.price}</p>
+        <p className="px-1 text-[#6088b0] font-bold justify-end">
+          {product.price}
+        </p>
       </Link>
     </div>
   );

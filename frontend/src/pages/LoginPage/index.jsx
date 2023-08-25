@@ -35,7 +35,7 @@ const LoginPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center mt-20 mb-5 max-w-[400px] min-h-100% m-auto">
+    <section className="flex flex-col justify-center mt-20 mb-5 max-w-[400px] min-h-100% m-auto px-10">
       <div className="p-6 bg-white rounded-md shadow-md">
         <h1 className="text-3xl font-semibold text-center ">로그인</h1>
         <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>

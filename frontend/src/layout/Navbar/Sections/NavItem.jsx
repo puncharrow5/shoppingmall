@@ -34,7 +34,7 @@ const NavItem = ({ mobile }) => {
   return (
     <ul
       className={`text-md justify-center w-full flex gap-4 ${
-        mobile && "flex-col bg-gray-900 h-full mb-4 "
+        mobile && "flex-col bg-[#4f4c47] h-full mb-4 "
       } items-center`}
     >
       {routes.map(({ to, name, auth, icon }) => {

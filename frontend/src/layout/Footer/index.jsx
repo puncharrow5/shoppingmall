@@ -1,10 +1,9 @@
 import React from "react";
-import { AiOutlineSmile } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <div className="flex z-10 h-20 text-lg justify-center items-center">
-      All rights reserved. <AiOutlineSmile />
+    <div className="flex z-10 h-[60px] mt-10 text-lg font-bold text-white justify-center items-center bg-[#111111]">
+      <p className="mr-2">Email : osh4761@hanmail.net</p>
     </div>
   );
 };

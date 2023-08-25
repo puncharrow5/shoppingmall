@@ -31,7 +31,7 @@ function Layout() {
 
       <Navbar />
 
-      <main className="mb-auto mt-10 w-10/12 max-w-4xl mx-auto px-10 bg-white rounded-lg shadow-3xl">
+      <main className="mb-auto mt-10 w-10/12 max-w-4xl mx-auto bg-white rounded-lg shadow-3xl">
         <Outlet />
       </main>
 

@@ -76,6 +76,32 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  const type = req.query.type;
+  let productIds = req.params.id;
+
+  if (type === "array") {
+    // id = 1234, 2345, 3456 이런 식의 id를 productIds = ["1234", "2345", "3456"] 로 바꿈
+    // productIds 는 바로 아래의 $in: productIds 에 의해 자동으로 할당이 됨
+    let ids = productIds.split(",");
+    productIds = ids.map((item) => {
+      return item;
+    });
+  }
+
+  // DB에서 productId와 같은 id를 갖는 상품의 정보를 가져옴
+  try {
+    const product = await Product.find({ _id: { $in: productIds } }).populate(
+      "writer"
+    );
+
+    return res.status(200).send(product);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // 상품 이미지 업로드(auth 미들웨어 거쳐감)
 router.post("/image", auth, async (req, res, next) => {
   upload(req, res, (err) => {

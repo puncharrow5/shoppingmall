@@ -39,12 +39,12 @@ app.use("/products", require("./routes/products"));
 
 app.use("/uploads", express.static("uploads"));
 
+app.listen(port, () => {
+  console.log(`${port}번에서 실행이 되었습니다.`);
+});
+
 // 에러발생시 에러처리
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.send(error.message || "서버에 오류가 발생했습니다.");
-});
-
-app.listen(port, () => {
-  console.log(`${port}번에서 실행이 되었습니다.`);
 });

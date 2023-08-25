@@ -59,7 +59,7 @@ const UploadProductPage = () => {
   };
 
   return (
-    <section>
+    <section className="px-10">
       <div className="text-center m-12">
         <h1 className="text-2xl font-bold">예상 상품 업로드</h1>
       </div>
@@ -128,7 +128,7 @@ const UploadProductPage = () => {
         <div className="mt-12 mb-5 ">
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-black rounded-md hover:bg-gray-700"
+            className="w-full px-4 py-2 text-white bg-black rounded-md"
           >
             작성하기
           </button>

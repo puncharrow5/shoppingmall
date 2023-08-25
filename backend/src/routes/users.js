@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Product = require("../models/Product");
 const auth = require("../middleware/auth");
 const router = express.Router();
 
@@ -66,6 +67,93 @@ router.get("/auth", auth, async (req, res) => {
     cart: req.user.cart,
     history: req.user.history,
   });
+});
+
+router.post("/cart", auth, async (req, res, next) => {
+  try {
+    // User collection에서 해당 유저의 정보 가져옴
+    const userInfo = await User.findOne({ _id: req.user._id });
+
+    // 유저 정보 중 cart에 해당 상품 있는지 확인
+    let duplicate = false;
+    userInfo.cart.forEach((item) => {
+      if (item.id === req.body.productId) {
+        duplicate = true;
+      }
+    });
+
+    // cart에 해당 상품 있을 경우
+    if (duplicate) {
+      const user = await User.findOneAndUpdate(
+        // 유저 데이터를 id로 찾음
+        { _id: req.user._id, "cart.id": req.body.productId },
+        // 유저 데이터를 업데이트($inc는 mongoDB의 연산자로 document의 field값을 증가 or 감소시킴. $inc( field : 변화시킬 숫자))
+        { $inc: { "cart.$.quantity": 1 } },
+        // 옵션 추가해줌(업데이트 이후 duplicate는 true)
+        { new: true }
+      );
+
+      return res.status(201).send(user.cart);
+    }
+    // cart에 해당 상품 없을 경우
+    else {
+      const user = await User.findOneAndUpdate(
+        // 유저 데이터를 찾음
+        { _id: req.user._id },
+        // 유저 데이터중 cart에 아래의 데이터들을 추가해줌($push는 mongoDB의 연산자로 새로운 배열을 생성하거나, 이미 존재할 경우 배열 끝에 요소를 새로 추가)
+        {
+          $push: {
+            cart: {
+              id: req.body.productId,
+              title: req.body.productTitle,
+              quantity: 1,
+              date: Date.now(),
+            },
+          },
+        },
+        // 옵션 추가해줌(업데이트 이후 duplicate를 true)
+        { new: true }
+      );
+      return res.status(201).send(user.cart);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/cart", auth, async (req, res, next) => {
+  try {
+    // cart 안에 지우려고 하는 상품 지움
+    const userInfo = await User.findOneAndUpdate(
+      // 유저 데이터를 id로 찾음
+      { _id: req.user._id },
+      // $pull은 mongoDB의 연산자로 특정 값 또는 document를 제거
+      {
+        $pull: { cart: { id: req.query.productId } },
+      },
+      { new: true }
+    );
+
+    // cart에 바뀐 데이터(productId)로 다시 넣어줌
+    const cart = userInfo.cart;
+    // array에 cart에 들어있는 productId들을 넣어줌
+    const array = cart.map((item) => {
+      return item.id;
+    });
+
+    const productInfo = await Product
+      // array에 있는 productId에 맞는 product 데이터들을 가져옴($in은 특정 key의 값을 갖는 데이터들을 가져옴. 여기선 array, 즉 _id가 array에 있는 productId인 데이터를 가져옴)
+      .find({ _id: { $in: array } })
+      // writer의 데이터 또한 가져옴
+      .populate("writer");
+
+    return res.json({
+      productInfo,
+      cart,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

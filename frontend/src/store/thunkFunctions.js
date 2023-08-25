@@ -72,3 +72,74 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+
+export const addToCart = createAsyncThunk(
+  "user/addToCart",
+
+  // payload creator
+  async (body, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`/users/cart`, body);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      // 에러발생시 payload가 됨
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
+
+export const getCartItems = createAsyncThunk(
+  "user/getCartItems",
+
+  // payload creator 이부분 다시 공부!
+  async ({ cartItemIds, userCart }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.get(
+        `/products/${cartItemIds}?type=array`
+      );
+      userCart.forEach((cartItem) => {
+        response.data.forEach((productDetail, index) => {
+          if (cartItem.id === productDetail._id) {
+            response.data[index].quantity = cartItem.quantity;
+          }
+        });
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      // 에러발생시 payload가 됨
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
+
+export const removeCartItem = createAsyncThunk(
+  "user/removeCartItem",
+
+  // payload creator
+  async (productId, thunkAPI) => {
+    try {
+      const response = await axiosInstance.delete(
+        `users/cart?productId=${productId}`
+      );
+
+      response.data.cart.forEach((cartItem) => {
+        response.data.productInfo.forEach((productDetail, index) => {
+          if (cartItem.id === productDetail._id) {
+            response.data.prodcutInfo[index].quantity = cartItem.quantity;
+          }
+        });
+      });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      // 에러발생시 payload가 됨
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
