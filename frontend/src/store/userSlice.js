@@ -7,6 +7,7 @@ import {
   addToCart,
   getCartItems,
   removeCartItem,
+  payProducts,
 } from "./thunkFunctions";
 import { toast } from "react-toastify";
 
@@ -133,6 +134,22 @@ const userSlice = createSlice({
         toast.info("장바구니에서 삭제되었습니다.");
       })
       .addCase(removeCartItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        toast.error(action.payload);
+      })
+
+      .addCase(payProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(payProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // 결제 완료 후 cart 비워줌
+        state.cartDetail = [];
+        state.userData.cart = [];
+        toast.info("상품 구매가 완료되었습니다!");
+      })
+      .addCase(payProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         toast.error(action.payload);

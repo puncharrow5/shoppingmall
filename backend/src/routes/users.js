@@ -1,8 +1,12 @@
 const express = require("express");
+const async = require("async");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const User = require("../models/User");
 const Product = require("../models/Product");
+const Payment = require("../models/Payments");
 const auth = require("../middleware/auth");
+
 const router = express.Router();
 
 //데이터베이스에 아래 데이터들을 저장
@@ -154,6 +158,75 @@ router.delete("/cart", auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.post("/payment", auth, async (req, res) => {
+  let history = [];
+  let transactionData = {};
+
+  // User Collection 안의 history 필드에 간단한 결제 정보 넣어줌
+  req.body.cartDetail.forEach((item) => {
+    history.push({
+      // 국제 표준 규격
+      purchaseDate: new Date().toISOString(),
+      name: item.title,
+      id: item._id,
+      price: item.price,
+      quantity: item.quantity,
+      // randomUUID로 랜덤값 생성
+      paymentId: crypto.randomUUID(),
+    });
+  });
+
+  // Payment Collection에 자세한 결제 정보 넣어줌
+  transactionData.user = {
+    id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+  };
+
+  // Payment Collection에 history 필드를 product라는 이름으로 넣어줌
+  transactionData.product = history;
+
+  // User Collection
+  await User.findOneAndUpdate(
+    // req.user._id 객체에 업데이트
+    { _id: req.user._id },
+    // history에 push, { $each: history}를 통해 history배열 안의 객체들만 push함
+    // 이후 $set: { cart: [] }를 통해 cart를 빈 배열로 바꿔줌
+    { $push: { history: { $each: history } }, $set: { cart: [] } }
+  );
+
+  // Payment Collection
+  const payment = new Payment(transactionData);
+  const paymentSave = await payment.save();
+
+  console.log(paymentSave);
+
+  let products = [];
+  paymentSave.product.forEach((item) => {
+    products.push({ id: item.id, quantity: item.quantity });
+  });
+
+  async.eachSeries(
+    products,
+    async (item) => {
+      await Product.updateOne(
+        // item.id 객체에 업데이트
+        { _id: item.id },
+        // sold를 item.quantity 만큼 증가시시킴
+        {
+          $inc: {
+            sold: item.quantity,
+          },
+        }
+      );
+    },
+    (err) => {
+      if (err) return res.status(500).send(err);
+      else return res.sendStatus(200);
+    }
+  );
 });
 
 module.exports = router;

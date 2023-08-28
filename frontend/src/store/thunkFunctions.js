@@ -129,10 +129,28 @@ export const removeCartItem = createAsyncThunk(
       response.data.cart.forEach((cartItem) => {
         response.data.productInfo.forEach((productDetail, index) => {
           if (cartItem.id === productDetail._id) {
-            response.data.prodcutInfo[index].quantity = cartItem.quantity;
+            response.data.productInfo[index].quantity = cartItem.quantity;
           }
         });
       });
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
+
+      // 에러발생시 payload가 됨
+      return thunkAPI.rejectWithValue(error.response.data || error.message);
+    }
+  }
+);
+
+export const payProducts = createAsyncThunk(
+  "user/payProducts",
+
+  // payload creator
+  async (body, thunkAPI) => {
+    try {
+      const response = await axiosInstance.post(`/users/payment`, body);
 
       return response.data;
     } catch (error) {

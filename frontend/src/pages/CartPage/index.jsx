@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItems, removeCartItem } from "../../store/thunkFunctions";
+import {
+  getCartItems,
+  removeCartItem,
+  payProducts,
+} from "../../store/thunkFunctions";
 import CartTable from "./Sections/CartTable";
 
 const CartPage = () => {
@@ -30,10 +34,10 @@ const CartPage = () => {
   }, [dispatch, userData]);
 
   useEffect(() => {
-    caculatePrice(cartDetail);
+    calculatePrice(cartDetail);
   }, [cartDetail]);
 
-  const caculatePrice = (cartItems) => {
+  const calculatePrice = (cartItems) => {
     let total = 0;
     cartItems.map((item) => (total += item.price * item.quantity));
     setTotalPrice(total);
@@ -41,6 +45,10 @@ const CartPage = () => {
 
   const handleRemoveItem = (productId) => {
     dispatch(removeCartItem(productId));
+  };
+
+  const handlePaymentClick = () => {
+    dispatch(payProducts({ cartDetail }));
   };
 
   return (
@@ -64,7 +72,10 @@ const CartPage = () => {
                 <span>합계</span>
                 <span>{totalPrice} 원</span>
               </p>
-              <button className="w-full h-12 mt-8 text-white bg-[#111111] hover:bg-[#41b979] rounded-3xl">
+              <button
+                className="w-full h-12 mt-8 text-white bg-[#111111] hover:bg-[#41b979] rounded-3xl"
+                onClick={handlePaymentClick}
+              >
                 결제하기
               </button>
             </div>
