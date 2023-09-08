@@ -39,19 +39,16 @@ const LandingPage = () => {
     try {
       const response = await axiosInstance.get("/products", { params });
       if (loadMore) {
-        // 원래 있던 products들을 나열한 후 새로 받은 products들을 나열
         setProducts([...products, ...response.data.products]);
       } else {
         setProducts(response.data.products);
       }
-      // 이후 hasMore의 state를 업데이트함
       setHasMore(response.data.hasMore);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // onClick 이벤트로 함수 실행 시 loadMore이 true가 됨
   const handleLoadMore = () => {
     const body = {
       skip: skip + limit,
@@ -59,12 +56,10 @@ const LandingPage = () => {
       loadMore: true,
       searchTerm: searchTerm,
     };
-    // 데이터베이스에서 product의 데이터 호출
     fetchProducts(body);
     setSkip(skip + limit);
   };
 
-  // 이부분 다시 공부하기!!!
   const handleFilters = (newFilteredData, category) => {
     const newFilters = { ...filters };
     newFilters[category] = newFilteredData;
@@ -73,15 +68,12 @@ const LandingPage = () => {
       newFilters[category] = priceValue;
     }
     showFilteredResults(newFilters);
-    // filters의 state를 newFilters로 업데이트
     setFilters(newFilters);
   };
 
   const handlePrice = (value) => {
     let array = [];
-    // filterData의 prices의 key
     for (let key in prices) {
-      // parseInt 메소드를 이용해 10진법의 수로 바꿔줌
       if (prices[key]._id === parseInt(value, 10)) {
         array = prices[key].array;
       }
@@ -96,7 +88,6 @@ const LandingPage = () => {
       filters,
       searchTerm,
     };
-    // 데이터베이스에서 product의 데이터 호출
     fetchProducts(body);
     setSkip(0);
   };

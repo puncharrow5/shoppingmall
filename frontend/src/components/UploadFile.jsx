@@ -8,12 +8,9 @@ const UploadFile = ({ onImageChange, images }) => {
     let formData = new FormData();
 
     const config = {
-      // axios를 사용해 비동기로 post전송할 경우엔 보내는 url, 데이터, req.header를 파라미터로 넣어주면 된다.
-      // 보내는 데이터가 이미지일 경우엔 헤더를 반드시 "content-type": "multipart/form-data"로 설정해 줘야한다.
       header: { "content-type": "multipart/form-data" },
     };
 
-    // append 메소드는 선택된 요소 내부의 끝 부분에 컨텐츠를 삽입함(formData 내부의 파일들 중 가장 끝에 저장됨)
     formData.append("file", file[0]);
 
     try {
@@ -29,11 +26,8 @@ const UploadFile = ({ onImageChange, images }) => {
   };
 
   const handleDelete = (image) => {
-    // 클릭한 이미지의 index를 currentImageIndex 반환함
     const currentImageIndex = images.indexOf(image);
-    // images의 원본을 복사
     let newImage = [...images];
-    // images에서 currentImageIndex부터 하나를 지움
     newImage.splice(currentImageIndex, 1);
     onImageChange(newImage);
   };

@@ -46,7 +46,7 @@ const ProductInfo = ({ product }) => {
 };
 
 ProductInfo.propTypes = {
-  product: PropTypes.object.isRequired, // Add product prop validation
+  product: PropTypes.object.isRequired,
 };
 
 export default ProductInfo;

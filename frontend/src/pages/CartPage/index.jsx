@@ -15,7 +15,6 @@ const CartPage = () => {
 
   const dispatch = useDispatch();
 
-  // 이부분 확실하게 다시 공부하기!
   useEffect(() => {
     let cartItemIds = [];
 

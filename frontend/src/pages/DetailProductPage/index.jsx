@@ -5,7 +5,6 @@ import ProductImage from "./Sections/ProductImage";
 import ProductInfo from "./Sections/ProductInfo";
 
 const DetailProductPage = () => {
-  // prductId를 개별 변수로 사용
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -16,7 +15,6 @@ const DetailProductPage = () => {
           const response = await axiosInstance.get(
             `/products/${productId}?type=single`
           );
-          // 백엔드에서 response로 보내준 데이터를 product에 넣어줌
           setProduct(response.data[0]);
         } catch (error) {
           console.error(error);
@@ -24,7 +22,6 @@ const DetailProductPage = () => {
       }
       fetchProduct();
     },
-    // productId가 바뀔 때마다 fetchProduct 함수 호출됨
     [productId]
   );
 

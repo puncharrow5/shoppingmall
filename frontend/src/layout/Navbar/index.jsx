@@ -7,7 +7,6 @@ const Navbar = () => {
   const [menu, setMenu] = useState(true);
 
   const handleMenu = () => {
-    // !menu는 토글 방식(true 일 경우엔 false, false일 경우엔 true)
     setMenu(!menu);
   };
 
