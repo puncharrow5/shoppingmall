@@ -9,12 +9,10 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await axiosInstance.post(`/users/register`, body);
 
-      // payload (백엔드에서 전달해준 데이터는 response.data 안에 들어있음)
       return response.data;
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -23,17 +21,14 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
 
-  // payload creator
   async (body, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`/users/login`, body);
 
-      // payload (백엔드에서 전달해준 데이터는 response.data 안에 들어있음)
       return response.data;
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -42,7 +37,6 @@ export const loginUser = createAsyncThunk(
 export const authUser = createAsyncThunk(
   "user/authUser",
 
-  // payload creator
   async (body, thunkAPI) => {
     try {
       const response = await axiosInstance.get(`users/auth`);
@@ -50,7 +44,6 @@ export const authUser = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -59,7 +52,6 @@ export const authUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   "user/logoutUser",
 
-  // payload creator
   async (body, thunkAPI) => {
     try {
       const response = await axiosInstance.get(`users/logout`);
@@ -67,7 +59,6 @@ export const logoutUser = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -76,7 +67,6 @@ export const logoutUser = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   "user/addToCart",
 
-  // payload creator
   async (body, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`/users/cart`, body);
@@ -84,7 +74,6 @@ export const addToCart = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -93,7 +82,6 @@ export const addToCart = createAsyncThunk(
 export const getCartItems = createAsyncThunk(
   "user/getCartItems",
 
-  // payload creator 이부분 다시 공부!
   async ({ cartItemIds, userCart }, thunkAPI) => {
     try {
       const response = await axiosInstance.get(
@@ -110,7 +98,7 @@ export const getCartItems = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
+
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -119,7 +107,6 @@ export const getCartItems = createAsyncThunk(
 export const removeCartItem = createAsyncThunk(
   "user/removeCartItem",
 
-  // payload creator
   async (productId, thunkAPI) => {
     try {
       const response = await axiosInstance.delete(
@@ -138,7 +125,6 @@ export const removeCartItem = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }
@@ -147,7 +133,6 @@ export const removeCartItem = createAsyncThunk(
 export const payProducts = createAsyncThunk(
   "user/payProducts",
 
-  // payload creator
   async (body, thunkAPI) => {
     try {
       const response = await axiosInstance.post(`/users/payment`, body);
@@ -156,7 +141,6 @@ export const payProducts = createAsyncThunk(
     } catch (error) {
       console.log(error);
 
-      // 에러발생시 payload가 됨
       return thunkAPI.rejectWithValue(error.response.data || error.message);
     }
   }

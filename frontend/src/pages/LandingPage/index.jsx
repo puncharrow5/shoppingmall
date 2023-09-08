@@ -28,7 +28,6 @@ const LandingPage = () => {
     filters = {},
     searchTerm = "",
   }) => {
-    // 객체 생성
     const params = {
       skip,
       limit,

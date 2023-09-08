@@ -42,7 +42,6 @@ const UploadProductPage = () => {
   };
 
   const handleSubmit = async (event) => {
-    // 업로드 시 페이지 리프레시 방지
     event.preventDefault();
 
     const body = {

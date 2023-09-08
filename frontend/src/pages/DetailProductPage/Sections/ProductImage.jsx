@@ -16,10 +16,8 @@ const ProductImage = ({ product }) => {
         });
       });
 
-      // 받아온 이미지를 넣어줘 state 업데이트 해줌
       setImages(images);
     }
-    //product 바뀔 때마다 호출
   }, [product]);
 
   return (
@@ -30,7 +28,7 @@ const ProductImage = ({ product }) => {
 };
 
 ProductImage.propTypes = {
-  product: PropTypes.object.isRequired, // Add product prop validation
+  product: PropTypes.object.isRequired,
 };
 
 export default ProductImage;

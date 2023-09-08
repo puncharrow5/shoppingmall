@@ -14,8 +14,8 @@ const SearchInput = ({ onSearch, searchTerm }) => {
 };
 
 SearchInput.propTypes = {
-  onSearch: PropTypes.func.isRequired, // Validate onSearch as a function
-  searchTerm: PropTypes.string.isRequired, // Validate searchTerm as a string
+  onSearch: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string.isRequired,
 };
 
 export default SearchInput;

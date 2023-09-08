@@ -30,34 +30,28 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // 가입 보류 중
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      // 가입 성공
       .addCase(registerUser.fulfilled, (state) => {
         state.isLoading = false;
         toast.info("회원가입이 완료되었습니다.");
       })
-      // 가입 실패
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         toast.error(action.payload);
       })
 
-      // 로그인 보류 중
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
       })
-      // 로그인 성공
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userData = action.payload;
         state.isAuth = true;
         localStorage.setItem("accessToken", action.payload.accessToken);
       })
-      // 로그인 실패
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
@@ -84,10 +78,8 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        // 로그아웃 시 userSlice의 initialState의 초기 userData로 초기화시켜줌
         state.userData = initialState.userData;
         state.isAuth = false;
-        // 토큰 삭제시켜줌
         localStorage.removeItem("accessToken");
       })
       .addCase(logoutUser.rejected, (state, action) => {
@@ -144,7 +136,6 @@ const userSlice = createSlice({
       })
       .addCase(payProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        // 결제 완료 후 cart 비워줌
         state.cartDetail = [];
         state.userData.cart = [];
         toast.info("상품 구매가 완료되었습니다!");
