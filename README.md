@@ -13,33 +13,8 @@
 
 
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-        <li><a href="#run">Run</a></li>
-      </ul>
-    </li>
-    <li><a href="#screenshots">Screenshots</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ol>
-</details>
-
-
-
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## 프로젝트 소개
 
 ![coverimage](https://github.com/puncharrow5/shoppingmall/assets/45795161/5630abfa-0fa9-45e8-aa78-48e72aef748e)
 
@@ -48,6 +23,10 @@
 * Strymon사에서 제공하는 제품들을 구경할 수 있습니다.
 * 제품들의 상세 정보를 확인해보세요!
 * 맘에 드는 제품들을 장바구니에 추가하세요!
+
+### 프로젝트 목적
+* 이 프로젝트를 시작한 이유는 웹 개발에서 프론트엔드에서부터 백엔드까지 직접 구현하면서 웹의 전반적인 흐름을 파악하기 위해 시작하게 되었습니다.
+* 또한, 프로젝트 시작 전까진 다른 사이트들에서 제공하는 오픈 API를 받아와 사용해본 경험밖에 없었기 때문에 직접 API를 제작하는 경험을 하고 싶었습니다.
 
 <a href="https://geode-divan-811.notion.site/Strymon-Instrument-Company-0195cee5e91b441498afe417fe1d14bd">노션 바로가기</a>
 
