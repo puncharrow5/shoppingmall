@@ -65,7 +65,7 @@
 |Redux Toolkit|Redux 사용 시 발생하는 복잡성을 줄이고 효율적으로 사용할 수 있게 해줍니다. 이로 인해 개발을 간소화하고 효율적으로 만들어줍니다.|
 |Axios|Promise 기반의 HTTP cilent 라이브러리로 개발하면서 api 호출을 위해 fetch보단 axios를 위주로 사용했기 때문에 더 익숙해 선택했습니다. 그리고 axios interceptor와 axios instance를 사용함으로 관리 및 유지보수가 용이하다는 장점도 갖고 있습니다.|
 |TailwindCSS|인라인 형식으로 CSS를 작성하기 때문에 컨택스트 전환이 적고 클래스명을 따로 짓지 않아도 되기 때문에 시간을 많이 절약할 수 있어 선택했습니다.<br/> 또한, 컴포넌트 생성과 관리가 쉽고 유지보수하기 편하며 스타일링 할 때 일관성있는 디자인이 가능합니다.|
-|Node.js|백엔드 개발을 위해 새로운 언어를 공부하지 않고 JavaScript를 활용하기 위해 선택했습니.|
+|Node.js|백엔드 개발을 위해 새로운 언어를 공부하지 않고 JavaScript를 활용하기 위해 선택했습니다.|
 |Express.js|Node.js의 웹 프레임워크로 RESTFul API 서버를 구축하기 위해 선택했습니다.|
 |MongoDB|데이터베이스를 다루는 경험이 처음이였기 때문에 NoSql DB로 CRUD 단계에서 가장 쉽게 사용할 수 있는 MongoDB를 선택했습니다.|
 <br/>
